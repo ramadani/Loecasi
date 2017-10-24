@@ -6,8 +6,8 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -19,7 +19,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
 
@@ -32,7 +32,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     companion object {
         val LOG_TAG = MapsActivity::class.java.simpleName
         val ACCESS_MY_LOCATION_PERMISSIONS_REQUEST = 10001
-        val DEFAULT_ZOOM = 15f
+        val DEFAULT_ZOOM = 16f
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,8 +130,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         Log.d(LOG_TAG, "Current location is null. Using defaults.")
                         Log.e(LOG_TAG, "Exception ${it.exception?.message}", it.exception)
 
-                        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                                mDefaultLocation, DEFAULT_ZOOM))
+                        mMap?.animateCamera(CameraUpdateFactory.newLatLng(mDefaultLocation))
                         mMap?.uiSettings?.isMyLocationButtonEnabled = false
                     }
                 })
