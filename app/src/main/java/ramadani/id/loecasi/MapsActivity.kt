@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -17,14 +18,18 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
 
 class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var mTvLat: TextView
+    private lateinit var mTvLng: TextView
 
     private var mLastKnownLocation: Location? = null
     private var mMap: GoogleMap? = null
+    private var mMapMarker: MarkerOptions? = null
 
     private var mDefaultLocation = LatLng(-2.27, 99.46)
     private var mLocationPermissionGranted: Boolean = false
@@ -32,12 +37,15 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
     companion object {
         val LOG_TAG = MapsActivity::class.java.simpleName
         val ACCESS_MY_LOCATION_PERMISSIONS_REQUEST = 10001
-        val DEFAULT_ZOOM = 16f
+        val DEFAULT_ZOOM = 17f
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
+        mTvLat = findViewById(R.id.tv_lat)
+        mTvLng = findViewById(R.id.tv_lng)
 
         // Construct a FusedLocationProviderClient
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -78,6 +86,13 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
         getDeviceLocation()
 
         mMap?.uiSettings?.isMapToolbarEnabled = false
+        mMap?.uiSettings?.isRotateGesturesEnabled = false
+        mMap?.setOnCameraIdleListener {
+            val latLng = mMap?.cameraPosition?.target
+            latLng?.let { setLocationData(it) }
+
+            Log.d(LOG_TAG, latLng.toString())
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -122,10 +137,11 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
                         // Set the map's camera position to the current location of the device
                         mLastKnownLocation = it.result
 
-                        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                                LatLng(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude),
-                                DEFAULT_ZOOM
-                        ))
+                        val currentLatLng = LatLng(mLastKnownLocation!!.latitude,
+                                mLastKnownLocation!!.longitude)
+
+                        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,
+                                DEFAULT_ZOOM))
                     } else {
                         Log.d(LOG_TAG, "Current location is null. Using defaults.")
                         Log.e(LOG_TAG, "Exception ${it.exception?.message}", it.exception)
@@ -138,5 +154,10 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
         } catch (e: SecurityException) {
             Log.e(LOG_TAG, e.message, e)
         }
+    }
+
+    private fun setLocationData(latLng: LatLng) {
+        mTvLat.text = getString(R.string.latitude, latLng.latitude.toString())
+        mTvLng.text = getString(R.string.longitude, latLng.longitude.toString())
     }
 }
