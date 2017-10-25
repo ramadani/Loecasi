@@ -16,4 +16,4 @@ org.gradle.jvmargs=-Xmx1536m
 # http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
 # org.gradle.parallel=true
 
-GOOGLE_MAPS_API_KEY=AIzaSyDRnlw3zDmmzxr_laPshpvPNjcJp7UkgVQ
+GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_KEY
