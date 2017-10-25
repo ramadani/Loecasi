@@ -3,4 +3,7 @@
     <color name="colorPrimary">#1BA261</color>
     <color name="colorPrimaryDark">#1BA261</color>
     <color name="colorAccent">#FFCD28</color>
+
+    <color name="google">#e8433a</color>
+    <color name="googleDark">#e0382f</color>
 </resources>

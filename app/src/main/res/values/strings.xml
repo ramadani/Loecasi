@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Loecasi</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="continue_with_google">Lanjut dengan Google</string>
+
     <string name="latitude">Lat: %1$s</string>
     <string name="longitude">Lng: %1$s</string>
 </resources>

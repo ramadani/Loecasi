@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="GoogleButton" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/btn_google_rounded</item>
+        <item name="android:paddingStart">@dimen/normal_distance</item>
+        <item name="android:paddingEnd">@dimen/normal_distance</item>
+    </style>
 </resources>

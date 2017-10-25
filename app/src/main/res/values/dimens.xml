@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="small_distance">8dp</dimen>
+    <dimen name="medium_distance">12dp</dimen>
+    <dimen name="normal_distance">16dp</dimen>
+    <dimen name="large_distance">20dp</dimen>
+    <dimen name="big_distance">24dp</dimen>
+    <dimen name="huge_distance">28dp</dimen>
+    <dimen name="massive_distance">32dp</dimen>
+</resources>

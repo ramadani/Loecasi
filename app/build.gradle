@@ -13,6 +13,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
+        resValue "string", "google_web_client_id", (project.findProperty("GOOGLE_WEB_CLIENT_ID") ?: "")
     }
     buildTypes {
         release {
@@ -27,9 +28,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
 
     compile "com.google.dagger:dagger:$dagger2_version"
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
@@ -39,6 +38,7 @@ dependencies {
 
     compile "com.google.android.gms:play-services-maps:$play_service_version"
     compile "com.google.android.gms:play-services-location:$play_service_version"
+    compile "com.google.android.gms:play-services-auth:$play_service_version"
 
     compile "com.google.firebase:firebase-auth:$firebase_version"
 
