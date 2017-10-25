@@ -18,7 +18,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
 
 class MapsActivity : FragmentActivity(), OnMapReadyCallback {
@@ -29,7 +28,6 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
     private var mLastKnownLocation: Location? = null
     private var mMap: GoogleMap? = null
-    private var mMapMarker: MarkerOptions? = null
 
     private var mDefaultLocation = LatLng(-2.27, 99.46)
     private var mLocationPermissionGranted: Boolean = false
@@ -90,8 +88,6 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
         mMap?.setOnCameraIdleListener {
             val latLng = mMap?.cameraPosition?.target
             latLng?.let { setLocationData(it) }
-
-            Log.d(LOG_TAG, latLng.toString())
         }
     }
 
@@ -136,12 +132,11 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
                     if (it.isSuccessful) {
                         // Set the map's camera position to the current location of the device
                         mLastKnownLocation = it.result
-
-                        val currentLatLng = LatLng(mLastKnownLocation!!.latitude,
-                                mLastKnownLocation!!.longitude)
-
-                        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,
-                                DEFAULT_ZOOM))
+                        mLastKnownLocation?.let {
+                            val currentLatLng = LatLng(it.latitude, it.longitude)
+                            mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,
+                                    DEFAULT_ZOOM))
+                        }
                     } else {
                         Log.d(LOG_TAG, "Current location is null. Using defaults.")
                         Log.e(LOG_TAG, "Exception ${it.exception?.message}", it.exception)
