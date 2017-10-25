@@ -1,4 +1,4 @@
-package org.loecasi.android
+package org.loecasi.android.feature
 
 import android.Manifest
 import android.annotation.TargetApi
@@ -19,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
+import org.loecasi.android.R
 
 class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
