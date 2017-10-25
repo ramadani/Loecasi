@@ -8,6 +8,8 @@ import org.loecasi.android.feature.base.MvpPresenter
  */
 interface SignInMvpPresenter<V : SignInMvpView> : MvpPresenter<V> {
 
+    fun onCheckAuth()
+
     fun onGoogleSignInClicked()
 
     fun authWithGoogle(account: GoogleSignInAccount)

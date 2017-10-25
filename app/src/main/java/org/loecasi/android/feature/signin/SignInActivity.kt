@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import dagger.android.AndroidInjection
 import org.loecasi.android.R
+import org.loecasi.android.feature.main.MainActivity
 import org.loecasi.android.toast
 import javax.inject.Inject
 
@@ -40,6 +41,11 @@ class SignInActivity : AppCompatActivity(), SignInMvpView {
         btnGoogleSignIn.setOnClickListener { presenter.onGoogleSignInClicked() }
     }
 
+    override fun onStart() {
+        super.onStart()
+        presenter.onCheckAuth()
+    }
+
     override fun onDestroy() {
         presenter.onDetach()
         super.onDestroy()
@@ -59,7 +65,9 @@ class SignInActivity : AppCompatActivity(), SignInMvpView {
     }
 
     override fun openMainScreen() {
-        toast("Go to main screen")
+        val mainActivity = Intent(this, MainActivity::class.java)
+        startActivity(mainActivity)
+        finish()
     }
 
     override fun authFailed() {

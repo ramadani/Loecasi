@@ -1,4 +1,4 @@
-package org.loecasi.android.feature
+package org.loecasi.android.feature.main
 
 import android.Manifest
 import android.annotation.TargetApi
@@ -19,9 +19,13 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
+import dagger.android.AndroidInjection
 import org.loecasi.android.R
+import javax.inject.Inject
 
-class MapsActivity : FragmentActivity(), OnMapReadyCallback {
+class MainActivity : FragmentActivity(), MainMvpView, OnMapReadyCallback {
+
+    @Inject lateinit var presenter: MainMvpPresenter<MainMvpView>
 
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var mTvLat: TextView
@@ -34,14 +38,16 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
     private var mLocationPermissionGranted: Boolean = false
 
     companion object {
-        val LOG_TAG = MapsActivity::class.java.simpleName
+        val LOG_TAG = MainActivity::class.java.simpleName
         val ACCESS_MY_LOCATION_PERMISSIONS_REQUEST = 10001
         val DEFAULT_ZOOM = 17f
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+        presenter.onAttach(this)
 
         mTvLat = findViewById(R.id.tv_lat)
         mTvLng = findViewById(R.id.tv_lng)

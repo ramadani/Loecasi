@@ -19,6 +19,12 @@ class SignInPresenter<V : SignInMvpView> @Inject constructor() : BasePresenter<V
         auth = FirebaseAuth.getInstance()
     }
 
+    override fun onCheckAuth() {
+        if (auth.currentUser != null) {
+            getView()?.openMainScreen()
+        }
+    }
+
     override fun onGoogleSignInClicked() {
         getView()?.signIn()
     }
