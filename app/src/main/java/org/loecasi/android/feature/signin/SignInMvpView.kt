@@ -10,4 +10,6 @@ interface SignInMvpView : MvpView {
     fun signIn()
 
     fun openMainScreen()
+
+    fun authFailed()
 }

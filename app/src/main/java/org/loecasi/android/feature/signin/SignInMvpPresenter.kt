@@ -1,5 +1,6 @@
 package org.loecasi.android.feature.signin
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import org.loecasi.android.feature.base.MvpPresenter
 
 /**
@@ -8,4 +9,6 @@ import org.loecasi.android.feature.base.MvpPresenter
 interface SignInMvpPresenter<V : SignInMvpView> : MvpPresenter<V> {
 
     fun onGoogleSignInClicked()
+
+    fun authWithGoogle(account: GoogleSignInAccount)
 }

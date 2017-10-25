@@ -1,16 +1,13 @@
 package org.loecasi.android.feature.signin
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import dagger.android.AndroidInjection
-
 import org.loecasi.android.R
 import org.loecasi.android.toast
 import javax.inject.Inject
@@ -35,7 +32,7 @@ class SignInActivity : AppCompatActivity(), SignInMvpView {
         presenter.onAttach(this)
 
         googleApiClient = GoogleApiClient.Builder(this)
-                .enableAutoManage(this, { Log.d(LOG_TAG, "Connection Failed: ${it.errorMessage}") })
+                .enableAutoManage(this, { toast("Connection Failed: ${it.errorMessage}") })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .build()
 
@@ -62,14 +59,17 @@ class SignInActivity : AppCompatActivity(), SignInMvpView {
     }
 
     override fun openMainScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        toast("Go to main screen")
+    }
+
+    override fun authFailed() {
+        toast("Authentication failed")
     }
 
     private fun onReceiveGoogleSignInResult(data: Intent?) {
         val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
         if (result.isSuccess) {
-            val account = result.signInAccount
-            Log.d(LOG_TAG, account?.email)
+            result.signInAccount?.let { presenter.authWithGoogle(it) }
         } else {
             toast("Google Sign In failed")
         }
