@@ -1,4 +1,4 @@
-package ramadani.id.loecasi;
+package org.loecasi.android;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,4 +1,4 @@
-package ramadani.id.loecasi
+package org.loecasi.android
 
 import android.Manifest
 import android.annotation.TargetApi
