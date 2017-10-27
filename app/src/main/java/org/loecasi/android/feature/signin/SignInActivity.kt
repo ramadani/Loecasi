@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import dagger.android.AndroidInjection
 import org.loecasi.android.R
+import org.loecasi.android.feature.home.HomeActivity
 import org.loecasi.android.feature.main.MainActivity
 import org.loecasi.android.toast
 import javax.inject.Inject
@@ -65,7 +66,7 @@ class SignInActivity : AppCompatActivity(), SignInMvpView {
     }
 
     override fun openMainScreen() {
-        val mainActivity = Intent(this, MainActivity::class.java)
+        val mainActivity = Intent(this, HomeActivity::class.java)
         startActivity(mainActivity)
         finish()
     }

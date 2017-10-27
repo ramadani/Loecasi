@@ -67,12 +67,12 @@ class MainActivity : FragmentActivity(), MainMvpView, OnMapReadyCallback {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 mLocationPermissionGranted = true
+                updateLocationUI()
+                getDeviceLocation()
             } else {
                 Toast.makeText(this, "Access location permission was denied", Toast.LENGTH_SHORT).show()
             }
         }
-
-        updateLocationUI()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
