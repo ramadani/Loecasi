@@ -2,18 +2,24 @@ package org.loecasi.android.feature.main
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import org.loecasi.android.R
+import org.loecasi.android.feature.main.account.AccountFragment
+import org.loecasi.android.feature.main.gift.GiftFragment
+import org.loecasi.android.feature.main.home.HomeFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainMvpView,
         BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Inject lateinit var presenter: MainMvpPresenter<MainMvpView>
+
+    private lateinit var fragmentManager: FragmentManager
 
     companion object {
         val LOG_TAG = MainActivity::class.java.simpleName
@@ -25,7 +31,10 @@ class MainActivity : AppCompatActivity(), MainMvpView,
         setContentView(R.layout.activity_home)
         presenter.onAttach(this)
 
+        fragmentManager = supportFragmentManager
         navigation.setOnNavigationItemSelectedListener(this)
+
+        if (savedInstanceState == null) presenter.onHomeMenuClicked()
     }
 
     override fun onDestroy() {
@@ -43,14 +52,14 @@ class MainActivity : AppCompatActivity(), MainMvpView,
     }
 
     override fun showHomeScreen() {
-        Log.d(LOG_TAG, "home screen")
+        fragmentManager.beginTransaction().replace(R.id.fl_main, HomeFragment()).commit()
     }
 
     override fun showGiftsScreen() {
-        Log.d(LOG_TAG, "gifts screen")
+        fragmentManager.beginTransaction().replace(R.id.fl_main, GiftFragment()).commit()
     }
 
     override fun showAccountScreen() {
-        Log.d(LOG_TAG, "account screen")
+        fragmentManager.beginTransaction().replace(R.id.fl_main, AccountFragment()).commit()
     }
 }
