@@ -7,6 +7,8 @@ buildscript {
         play_service_version = '11.4.2'
         firebase_version = '11.4.2'
         dagger2_version = '2.12'
+        rxjava2_version = '2.1.6'
+        rxandroid_version = '2.0.1'
     }
     repositories {
         google()
