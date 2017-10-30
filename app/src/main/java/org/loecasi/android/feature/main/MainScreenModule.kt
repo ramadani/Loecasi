@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 
 /**
- * Created by dani on 10/25/17.
+ * Created by dani on 10/30/17.
  */
 @Module
 class MainScreenModule {

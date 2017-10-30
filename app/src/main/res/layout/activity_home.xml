@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.loecasi.android.feature.home.HomeActivity">
+    tools:context="org.loecasi.android.feature.main.MainActivity">
 
     <TextView
         android:id="@+id/message"
