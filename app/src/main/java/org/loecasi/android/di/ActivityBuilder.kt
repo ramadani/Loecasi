@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import org.loecasi.android.feature.main.MainActivity
 import org.loecasi.android.feature.main.MainScreenModule
+import org.loecasi.android.feature.main.MainFragmentProvider
 import org.loecasi.android.feature.signin.SignInActivity
 import org.loecasi.android.feature.signin.SignInScreenModule
 import org.loecasi.android.feature.splash.SplashActivity
@@ -21,6 +22,9 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = arrayOf(SignInScreenModule::class))
     abstract fun bindSignInActivity(): SignInActivity
 
-    @ContributesAndroidInjector(modules = arrayOf(MainScreenModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(
+            MainScreenModule::class,
+            MainFragmentProvider::class
+    ))
     abstract fun bindMainActivity(): MainActivity
 }

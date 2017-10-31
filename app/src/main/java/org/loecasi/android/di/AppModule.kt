@@ -3,7 +3,6 @@ package org.loecasi.android.di
 import android.app.Application
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import org.loecasi.android.data.network.Auth
@@ -23,6 +22,6 @@ class AppModule {
     @Provides
     @Singleton
     fun provideAuth(): Auth {
-        return AuthService(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
+        return AuthService(FirebaseAuth.getInstance())
     }
 }

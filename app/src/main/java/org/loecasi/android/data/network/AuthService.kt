@@ -1,9 +1,7 @@
 package org.loecasi.android.data.network
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Observable
 import org.loecasi.android.data.model.User
 import javax.inject.Inject
@@ -11,10 +9,7 @@ import javax.inject.Inject
 /**
  * Created by dani on 10/31/17.
  */
-class AuthService @Inject constructor(
-        private val database: FirebaseFirestore,
-        private val auth: FirebaseAuth
-) : Auth {
+class AuthService @Inject constructor(private val auth: FirebaseAuth) : Auth {
 
     override fun check(): Boolean = auth.currentUser != null
 
