@@ -1,9 +1,14 @@
 package org.loecasi.android.feature.main
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
@@ -19,7 +24,8 @@ import org.loecasi.android.feature.main.home.HomeFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainMvpView,
-        BottomNavigationView.OnNavigationItemSelectedListener {
+        BottomNavigationView.OnNavigationItemSelectedListener,
+        HomeFragment.OnLocationRequestPermission {
 
     @Inject lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var presenter: MainMvpPresenter<MainMvpView>
@@ -28,6 +34,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainMvpVie
 
     companion object {
         val LOG_TAG = MainActivity::class.java.simpleName
+        val REQUEST_ACCESS_MY_LOCATION_PERMISSIONS = 631992
+        val HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG"
+        val GIFT_FRAGMENT_TAG = "GIFT_FRAGMENT_TAG"
+        val ACCOUNT_FRAGMENT_TAG = "ACCOUNT_FRAGMENT_TAG"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +47,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainMvpVie
         presenter.onAttach(this)
 
         fragmentManager = supportFragmentManager
+
         navigation.setOnNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) presenter.onHomeMenuClicked()
@@ -45,6 +56,23 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainMvpVie
     override fun onDestroy() {
         presenter.onDetach()
         super.onDestroy()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                                            grantResults: IntArray) {
+
+        if (requestCode == REQUEST_ACCESS_MY_LOCATION_PERMISSIONS) {
+            val locationPermsResult = permissions.size == 1 && permissions[0] ==
+                    Manifest.permission.ACCESS_FINE_LOCATION && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+
+            val homeFragment = getFragmentByTag(HOME_FRAGMENT_TAG) as HomeFragment
+            if (locationPermsResult) {
+                homeFragment.onLocationPermissionGranted()
+            } else {
+                homeFragment.onLocationPermissionDenied()
+            }
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -60,14 +88,34 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainMvpVie
             fragmentDispatchingAndroidInjector
 
     override fun showHomeScreen() {
-        fragmentManager.beginTransaction().replace(R.id.fl_main, HomeFragment()).commit()
+        fragmentManager.beginTransaction()
+                .replace(R.id.fl_main, HomeFragment(), HOME_FRAGMENT_TAG)
+                .commit()
     }
 
     override fun showGiftsScreen() {
-        fragmentManager.beginTransaction().replace(R.id.fl_main, GiftFragment()).commit()
+        fragmentManager.beginTransaction()
+                .replace(R.id.fl_main, GiftFragment(), GIFT_FRAGMENT_TAG)
+                .commit()
     }
 
     override fun showAccountScreen() {
-        fragmentManager.beginTransaction().replace(R.id.fl_main, AccountFragment()).commit()
+        fragmentManager.beginTransaction()
+                .replace(R.id.fl_main, AccountFragment(), ACCOUNT_FRAGMENT_TAG)
+                .commit()
     }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun getLocationRequest() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) {
+            val homeFragment = getFragmentByTag(HOME_FRAGMENT_TAG) as HomeFragment
+            homeFragment.onLocationPermissionGranted()
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_ACCESS_MY_LOCATION_PERMISSIONS)
+        }
+    }
+
+    private fun getFragmentByTag(tag: String): Fragment = fragmentManager.findFragmentByTag(tag)
 }
