@@ -3,7 +3,6 @@ package org.loecasi.android.feature.signin
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.loecasi.android.data.model.User
 import org.loecasi.android.data.network.Auth
 import org.loecasi.android.feature.base.BasePresenter
 import javax.inject.Inject
@@ -19,13 +18,7 @@ class SignInPresenter<V : SignInMvpView> @Inject constructor(private val auth: A
     }
 
     override fun authWithGoogle(account: GoogleSignInAccount) {
-        auth.isRegistered(account.email!!).concatMap { isRegistered ->
-                    when {
-                        isRegistered -> auth.googleSignIn(account.idToken!!)
-                        else -> auth.register(User(account.displayName!!, account.email!!))
-                                .concatMap { auth.googleSignIn(account.idToken!!) }
-                    }
-                }
+        auth.googleSignIn(account.idToken!!)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

@@ -18,29 +18,6 @@ class AuthService @Inject constructor(
 
     override fun check(): Boolean = auth.currentUser != null
 
-    override fun isRegistered(email: String): Observable<Boolean> {
-        return Observable.create { subscribe ->
-            val user = database.collection("users").whereEqualTo("email", email)
-            user.get().addOnCompleteListener {
-                when {
-                    it.isSuccessful -> when {
-                        it.result.size() > 0 -> subscribe.onNext(true)
-                        else -> subscribe.onNext(false)
-                    }
-                    else -> subscribe.onError(it.exception!!)
-                }
-            }
-        }
-    }
-
-    override fun register(user: User): Observable<String> {
-        return Observable.create { subscribe ->
-            database.collection("users").add(user)
-                    .addOnSuccessListener { subscribe.onNext(it.id) }
-                    .addOnFailureListener { subscribe.onError(it) }
-        }
-    }
-
     override fun googleSignIn(token: String): Observable<User> {
         return Observable.create { subscribe ->
             val credential = GoogleAuthProvider.getCredential(token, null)
