@@ -2,15 +2,14 @@ package org.loecasi.android.feature.main
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -25,12 +24,13 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainMvpView,
         BottomNavigationView.OnNavigationItemSelectedListener,
-        HomeFragment.OnLocationRequestPermission {
+        HomeFragment.OnLocationRequestPermission,
+        HomeFragment.OnLocationChangeListener {
 
     @Inject lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var presenter: MainMvpPresenter<MainMvpView>
 
-    private lateinit var fragmentManager: FragmentManager
+    private var lastKnownLocation: Location? = null
 
     companion object {
         val LOG_TAG = MainActivity::class.java.simpleName
@@ -45,8 +45,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainMvpVie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         presenter.onAttach(this)
-
-        fragmentManager = supportFragmentManager
 
         navigation.setOnNavigationItemSelectedListener(this)
 
@@ -88,19 +86,20 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainMvpVie
             fragmentDispatchingAndroidInjector
 
     override fun showHomeScreen() {
-        fragmentManager.beginTransaction()
-                .replace(R.id.fl_main, HomeFragment(), HOME_FRAGMENT_TAG)
+        val homeFragment = HomeFragment.newInstance(lastKnownLocation)
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fl_main, homeFragment, HOME_FRAGMENT_TAG)
                 .commit()
     }
 
     override fun showGiftsScreen() {
-        fragmentManager.beginTransaction()
+        supportFragmentManager.beginTransaction()
                 .replace(R.id.fl_main, GiftFragment(), GIFT_FRAGMENT_TAG)
                 .commit()
     }
 
     override fun showAccountScreen() {
-        fragmentManager.beginTransaction()
+        supportFragmentManager.beginTransaction()
                 .replace(R.id.fl_main, AccountFragment(), ACCOUNT_FRAGMENT_TAG)
                 .commit()
     }
@@ -117,5 +116,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainMvpVie
         }
     }
 
-    private fun getFragmentByTag(tag: String): Fragment = fragmentManager.findFragmentByTag(tag)
+    override fun saveLastKnownLocation(location: Location) {
+        lastKnownLocation = location
+    }
+
+    private fun getFragmentByTag(tag: String): Fragment {
+        return supportFragmentManager.findFragmentByTag(tag)
+    }
 }
