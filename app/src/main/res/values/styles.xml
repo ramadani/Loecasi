@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/layer_splash</item>
+    </style>
+
     <style name="GoogleButton" parent="@style/Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/btn_google_rounded</item>
         <item name="android:paddingStart">@dimen/normal_distance</item>

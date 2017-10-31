@@ -41,11 +41,6 @@ class SignInActivity : AppCompatActivity(), SignInMvpView {
         btnGoogleSignIn.setOnClickListener { presenter.onGoogleSignInClicked() }
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter.onCheckAuth()
-    }
-
     override fun onDestroy() {
         presenter.onDetach()
         super.onDestroy()

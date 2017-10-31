@@ -11,12 +11,8 @@ import javax.inject.Inject
 /**
  * Created by dani on 10/25/17.
  */
-class SignInPresenter<V : SignInMvpView> @Inject constructor(private val auth: Auth) : BasePresenter<V>(),
-        SignInMvpPresenter<V> {
-
-    override fun onCheckAuth() {
-        if (auth.check()) getView()?.openMainScreen()
-    }
+class SignInPresenter<V : SignInMvpView> @Inject constructor(private val auth: Auth)
+    : BasePresenter<V>(), SignInMvpPresenter<V> {
 
     override fun onGoogleSignInClicked() {
         getView()?.signIn()
