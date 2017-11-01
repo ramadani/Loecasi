@@ -8,7 +8,6 @@ import java.util.*
 data class Gift(
         val title: String,
         val description: String,
-        val imgUrl: String,
         val location: Location,
         val uid: String,
         val createdAt: Date,

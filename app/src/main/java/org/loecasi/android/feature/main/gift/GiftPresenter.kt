@@ -14,7 +14,7 @@ class GiftPresenter<V : GiftMvpView> @Inject constructor() : BasePresenter<V>(),
     }
 
     override fun onAddButtonClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        getView()?.openCreateScreen()
     }
 
     override fun onItemClicked() {

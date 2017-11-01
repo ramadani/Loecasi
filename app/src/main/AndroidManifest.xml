@@ -26,11 +26,13 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".feature.signin.SignInActivity" />
         <activity android:name=".feature.main.MainActivity" />
+        <activity android:name=".feature.gift.create.GiftCreateActivity"></activity>
     </application>
 
 </manifest>
