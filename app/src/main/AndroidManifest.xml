@@ -32,7 +32,7 @@
         </activity>
         <activity android:name=".feature.signin.SignInActivity" />
         <activity android:name=".feature.main.MainActivity" />
-        <activity android:name=".feature.gift.create.GiftCreateActivity"></activity>
+        <activity android:name=".feature.gift.create.GiftCreateActivity" />
     </application>
 
 </manifest>

@@ -8,5 +8,5 @@ import org.loecasi.android.feature.base.MvpPresenter
  */
 interface GiftCreateMvpPresenter<V : GiftCreateMvpView> : MvpPresenter<V> {
 
-    fun onSaveClicked(title: String, description: String, location: Location)
+    fun onSaveClicked(name: String, description: String, location: Location)
 }

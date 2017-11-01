@@ -11,4 +11,8 @@
     <string name="title_home">Home</string>
     <string name="title_gifts">Gifts</string>
     <string name="title_account">Account</string>
+    <string name="title_gift_create">Create Gift</string>
+
+    <string name="gift_name">Gift Name</string>
+    <string name="gift_description">Gift Description</string>
 </resources>

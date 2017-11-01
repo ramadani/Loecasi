@@ -11,7 +11,7 @@ import javax.inject.Inject
 class GiftCreatePresenter<V : GiftCreateMvpView> @Inject constructor(private val auth: Auth) :
         BasePresenter<V>(), GiftCreateMvpPresenter<V> {
 
-    override fun onSaveClicked(title: String, description: String, location: Location) {
+    override fun onSaveClicked(name: String, description: String, location: Location) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
