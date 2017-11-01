@@ -6,7 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import org.loecasi.android.data.network.Auth
-import org.loecasi.android.data.network.AuthService
+import org.loecasi.android.data.network.service.AuthService
 import javax.inject.Singleton
 
 /**

@@ -8,6 +8,8 @@ import org.loecasi.android.data.model.User
  */
 interface Auth {
 
+    fun user(): User
+
     fun check(): Boolean
 
     fun googleSignIn(token: String): Observable<User>
