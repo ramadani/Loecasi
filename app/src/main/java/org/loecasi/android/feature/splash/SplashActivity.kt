@@ -16,6 +16,10 @@ class SplashActivity : AppCompatActivity(), SplashMvpView {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         presenter.onAttach(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
         presenter.onAuthCheck()
     }
 
