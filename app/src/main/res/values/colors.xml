@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#15864f</color>
     <color name="colorAccent">#FFCD28</color>
 
+    <color name="primaryBlack">#333333</color>
+    <color name="secondaryBlack">#555555</color>
+
     <color name="google">#e8433a</color>
     <color name="googleDark">#e0382f</color>
 </resources>

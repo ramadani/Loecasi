@@ -45,6 +45,11 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger2_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
 
+    implementation "com.jakewharton:butterknife:$butterknife_version"
+    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
+
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
     implementation "com.google.android.gms:play-services-maps:$play_service_version"
     implementation "com.google.android.gms:play-services-location:$play_service_version"
     implementation "com.google.android.gms:play-services-auth:$play_service_version"

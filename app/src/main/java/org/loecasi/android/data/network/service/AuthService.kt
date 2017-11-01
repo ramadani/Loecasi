@@ -14,7 +14,9 @@ class AuthService @Inject constructor(private val auth: FirebaseAuth) : Auth {
 
     override fun user(): User {
         val currentUser = auth.currentUser!!
-        return User(name = currentUser.displayName!!, email = currentUser.email!!)
+        return with(currentUser) {
+            User(uid, displayName!!, email!!, photoUrl)
+        }
     }
 
     override fun check(): Boolean = auth.currentUser != null

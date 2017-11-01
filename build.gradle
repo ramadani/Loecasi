@@ -9,6 +9,8 @@ buildscript {
         dagger2_version = '2.12'
         rxjava2_version = '2.1.6'
         rxandroid_version = '2.0.1'
+        butterknife_version = '8.8.1'
+        picasso_version = '2.5.2'
     }
     repositories {
         google()
