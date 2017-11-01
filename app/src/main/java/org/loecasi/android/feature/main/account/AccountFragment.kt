@@ -57,7 +57,7 @@ class AccountFragment : Fragment(), AccountMvpView {
             Picasso.with(context)
                     .load(photoUrl)
                     .transform(PicassoCircleTransformation())
-                    .resize(84, 84)
+                    .resize(128, 128)
                     .centerCrop()
                     .into(ivPhoto)
             tvName.text = name

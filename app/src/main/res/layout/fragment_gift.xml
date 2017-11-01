@@ -17,4 +17,12 @@
             app:title="@string/title_gifts"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fa_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/normal_distance"
+        app:srcCompat="@drawable/ic_add_white_24dp" />
 </android.support.design.widget.CoordinatorLayout>
